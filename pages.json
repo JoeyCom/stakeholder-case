@@ -1,0 +1,108 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "涉众案件"
+			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/law-case/list",
+			"style": {
+				"navigationBarTitleText": "案件列表"
+			}
+		},
+		{
+			"path": "pages/law-case/detail",
+			"style": {
+				"navigationBarTitleText": "案件详情"
+			}
+		},
+		{
+			"path": "pages/my/person-info/index",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages/my/bind/index",
+			"style": {
+				"navigationBarTitleText": "绑定用户"
+			}
+		},
+		{
+			"path": "pages/my/register/index",
+			"style": {
+				"navigationBarTitleText": "登记信息"
+			}
+		},
+		{
+			"path": "pages/law-case/proof/index",
+			"style": {
+				"navigationBarTitleText": "举证"
+			}
+		},
+		{
+			"path": "pages/my/law-case/index",
+			"style": {
+				"navigationBarTitleText": "我的案列"
+			}
+		},
+		{
+			"path": "pages/my/law-case/detail",
+			"style": {
+				"navigationBarTitleText": "举证资料"
+			}
+		},
+		{
+			"path": "pages/my/web-account/index",
+			"style": {
+				"navigationBarTitleText": "web 账号"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "涉众案件",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		// #ifndef MP-WEIXIN
+		"height": "56px",
+		"fontSize": "14px",
+		"iconWidth": "20px",
+		"spacing": "3px",
+		// #endif
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/img/home.png",
+        "selectedIconPath": "static/img/home-select.png",
+				"text": "主页"
+			},
+			{
+				"pagePath": "pages/law-case/list",
+				"iconPath": "static/img/law-case.png",
+        "selectedIconPath": "static/img/law-case-selected.png",
+				"text": "案件"
+			},
+			{
+				"pagePath": "pages/my/index",
+				"iconPath": "static/img/person.png",
+        "selectedIconPath": "static/img/person-selcet.png",
+				"text": "我的"
+			}
+		]
+	}
+}

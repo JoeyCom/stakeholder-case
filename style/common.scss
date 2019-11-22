@@ -1,0 +1,54 @@
+.g-tag {
+	padding: 3px 8px;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	font-size: 12px;
+}
+.g-tag.primary {
+	background: #007AFF;
+	border-color: #007AFF;
+	color: #fff;
+}
+.g-tag.primary.plain {
+	background: #fff;
+	border-color: #007AFF;
+	color: #007AFF;
+}
+
+.g-p-normal {
+	padding: 12px 0;
+}
+
+.g-category-title {
+	position: relative;
+	padding-left: 24rpx;
+	margin-left: 16rpx;
+	font-size: 32rpx;
+	&:before {
+		position: absolute;
+		left: 0;
+		top: 12rpx;
+		content: '　';
+		width: 12rpx;
+		height: 32rpx;
+		background-color: #09BB07;
+	}
+}
+
+.g-nodata {
+	color: #999;
+	text-align: center;
+	padding: 50rpx 0;
+}
+
+
+
+
+.uni-label {
+	text-indent: 0;
+	padding-left: 30rpx;
+}
+
+.uni-list-cell-db {
+	overflow-x: hidden;
+}
