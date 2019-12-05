@@ -113,42 +113,54 @@ function install(Vue, router) {
 			// token 失效
 			if (res.data.code === notLoginStatus) {
 				// 重新登录
-				uni.login({
-				  success: (res) => {
-				    if (res.code) {
-							request('login', { js_code: res.code }, (data, res) => {
-								// 登录成功，更换token
-								uni.setStorageSync('token', res.token)
-								// 再次请求
-								console.log(requestQarams)
-							}, (msg, data) => {
-								uni.setStorageSync('openid', data.openId)
-								if (data.code === 101) {
-									// 未登记
-									uni.setStorageSync('no_regi', 1)
-									Vue.prototype.$JFn.showModal({
-										title: '提示',
-										content: msg,
-										cancelText: '去绑定',
-										confirmText: '去登记',
-										success (res) {
-											if (res.confirm) {
-												// 跳登记页面
-												uni.navigateTo({
-													url: '/pages/my/register/index'
-												})
-											} else if (res.cancel) {
-												// 跳绑定页面
-												uni.navigateTo({
-													url: '/pages/my/bind/index'
-												})
-											}
-										}
-									})
-								}
-							})
-						}
-				  }
+				// uni.login({
+				//   success: (res) => {
+				//     if (res.code) {
+				// 			request('login', { js_code: res.code }, (data, res) => {
+				// 				// 登录成功，更换token
+				// 				uni.setStorageSync('token', res.token)
+				// 				// 再次请求
+				// 				console.log(requestQarams)
+				// 			}, (msg, data) => {
+				// 				uni.setStorageSync('openid', data.openId)
+				// 				if (data.code === 101) {
+				// 					// 未登记
+				// 					uni.setStorageSync('no_regi', 1)
+				// 					Vue.prototype.$JFn.showModal({
+				// 						title: '提示',
+				// 						content: msg,
+				// 						cancelText: '去绑定',
+				// 						confirmText: '去登记',
+				// 						success (res) {
+				// 							if (res.confirm) {
+				// 								// 跳登记页面
+				// 								uni.navigateTo({
+				// 									url: '/pages/my/register/index'
+				// 								})
+				// 							} else if (res.cancel) {
+				// 								// 跳绑定页面
+				// 								uni.navigateTo({
+				// 									url: '/pages/my/bind/index'
+				// 								})
+				// 							}
+				// 						}
+				// 					})
+				// 				}
+				// 			})
+				// 		}
+				//   }
+				// })
+				
+				let pages = getCurrentPages()
+				let currentPage = pages[pages.length - 1]
+				let route = '/' + currentPage.route + '?'
+				let options = currentPage.options
+				for (let k in options) {
+					route += k + '=' + options[k] + '&'
+				}
+				route = route.substr(0, route.length - 1)
+				uni.navigateTo({
+					url: '/pages/login/index?path=' + encodeURIComponent(route)
 				})
 			} else {
 				failFn(res.data.msg, res.data)
@@ -162,6 +174,16 @@ function install(Vue, router) {
 	function requestFail(err) {
 		Vue.prototype.$JFn.showError('请求错误')
 		console.log(err)
+	}
+	
+	// 拼接formData数据
+	function createFormData (obj, sign = 'XXX') {
+		let str = ''
+		for (let k in obj) {
+			str += `\r\n--${sign}\r\nContent-Disposition: form-data; name="${k}"\r\n\r\n${obj[k]}`
+		}
+		str += `\r\n--${sign}--`
+		return str
 	}
 
 	/*
@@ -228,12 +250,41 @@ function install(Vue, router) {
 				requestFail(err)
 			}
 		}
-		// body为字符串时使用pathinfo方式请求
-		if (isStr(body)) {
-			params.url = url[0] + body
-			params.data = null
+		if(url[1] === 'GET' || url[1] === 'POST') {
+			// body为字符串时使用pathinfo方式请求
+			if (isStr(body)) {
+				params.url = url[0] + body
+				delete params.data
+			}
+			return uni.request(params)
+		} else if (url[1] === 'FILE') {
+			if (body.jFile && body.jFile.filePath) {
+				let obj = {
+					url: url[0],
+					name: body.jFile.name || 'file',
+					filePath: body.jFile.filePath,
+					header: config,
+					success: res => {
+						res.data = JSON.parse(res.data)
+						return requestSuccess(successFn, failFn, res)
+					},
+					fail (err) {
+						requestFail(err)
+					}
+				}
+				delete body.jFile
+				obj.formData = body
+				return uni.uploadFile(obj)
+			} else {
+				// 没穿文件，调用普通post
+				params.method = 'POST'
+				delete params.data.jFile
+				let sign = 'XXXXX'
+				params.header['Content-Type'] = 'multipart/form-data; boundary=' + sign
+				params.data = createFormData(params.data, sign)
+				return uni.request(params)
+			}
 		}
-		return uni.request(params)
 	}
 	
 	// 上传文件
@@ -242,7 +293,6 @@ function install(Vue, router) {
 			header: { token: uni.getStorageSync('token'), ...obj.header },
 			...obj
 		}
-		console.log(obj)
 		uni.uploadFile(obj)
 	}
 

@@ -1,52 +1,38 @@
 <template>
 	<view>
+		<m-search @search="search()"></m-search>
 		<img-text-list :list="list.data"></img-text-list>
+		<uni-load-more :status="moreStatus[list.status]"></uni-load-more>
 	</view>
 </template>
 
 <script>
+	import mixinPaging from '@/components/mixin/paging'
 	export default {
+		mixins: [mixinPaging],
 		data () {
 			return {
-				// 列表
-				list: {
-					data: []
+				urlList: 'caseList',
+				queryParams: {
+					caseName: ''
 				}
 			}
 		},
-		onReady () {
+		onLoad () {
 			// 获取列表
 			this.getList()
 		},
+		onPullDownRefresh () {
+			this.list.paging.page = 1
+			this.list.data = []
+			this.getList(uni.stopPullDownRefresh)
+		},
 		methods: {
-			// 获取列表
-			getList () {
-				this.$JRequest('caseList', data => {
-					console.log(data)
-					this.list.data = data.list
-				})
-			},
-			// 未登记
-			noRegi (msg = '未绑定或未登记') {
-				this.$JFn.showModal({
-					title: '提示',
-					content: msg,
-					cancelText: '去绑定',
-					confirmText: '去登记',
-					success (res) {
-						if (res.confirm) {
-							// 跳登记页面
-							uni.navigateTo({
-								url: '/pages/my/register/index'
-							})
-						} else if (res.cancel) {
-							// 跳绑定页面
-							uni.navigateTo({
-								url: '/pages/my/bind/index'
-							})
-						}
-					}
-				})
+			search (val) {
+				this.list.data = []
+				this.list.paging.page = 1
+				this.queryParams.caseName = val
+				this.getList()
 			}
 		}
 	}

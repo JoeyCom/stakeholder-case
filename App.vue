@@ -1,41 +1,41 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			// console.log('App Launch')
 			
-			if (uni.getStorageSync('no_regi')) {
-				this.noRegi()
-				return
-			}
+			// if (uni.getStorageSync('no_regi')) {
+			// 	this.noRegi()
+			// 	return
+			// }
 			
-			if (!uni.getStorageSync('openid') && !uni.getStorageSync('token')) {
-				// 获取code
-				uni.login({
-				  success: (res) => {
-				    if (res.code) {
-							this.$JRequest('login', { js_code: res.code }, (data, res) => {
-								// 登录成功
-								// uni.setStorageSync('openid', data)
-								uni.setStorageSync('token', res.token)
-							}, (msg, data) => {
-								uni.setStorageSync('openid', data.openId)
-								if (data.code === 101) {
-									// 未登记
-									uni.setStorageSync('no_regi', 1)
-									this.noRegi(msg)
-								}
-							})
-						}
-				  }
-				})
-			}
+			// if (!uni.getStorageSync('openid') && !uni.getStorageSync('token')) {
+			// 	// 获取code
+			// 	uni.login({
+			// 	  success: (res) => {
+			// 	    if (res.code) {
+			// 				this.$JRequest('login', { js_code: res.code }, (data, res) => {
+			// 					// 登录成功
+			// 					// uni.setStorageSync('openid', data)
+			// 					uni.setStorageSync('token', res.token)
+			// 				}, (msg, data) => {
+			// 					uni.setStorageSync('openid', data.openId)
+			// 					if (data.code === 101) {
+			// 						// 未登记
+			// 						uni.setStorageSync('no_regi', 1)
+			// 						this.noRegi(msg)
+			// 					}
+			// 				})
+			// 			}
+			// 	  }
+			// 	})
+			// }
 			
 		},
 		onShow: function() {
-			console.log('App Show')
+			// console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			// console.log('App Hide')
 		},
 		methods: {
 			// 未登记

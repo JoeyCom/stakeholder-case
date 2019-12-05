@@ -1,8 +1,14 @@
 .g-tag {
-	padding: 3px 8px;
+	display: inline-block;
+	padding: 0 10rpx;
 	border-radius: 3px;
 	border: 1px solid #ddd;
 	font-size: 12px;
+	line-height: 1.5;
+	box-sizing:border-box;
+	&.button::after {
+		border: none;
+	}
 }
 .g-tag.primary {
 	background: #007AFF;
@@ -13,6 +19,10 @@
 	background: #fff;
 	border-color: #007AFF;
 	color: #007AFF;
+	&[disabled] {
+		border-color: #999;
+		color: #999;
+	}
 }
 
 .g-p-normal {
@@ -41,6 +51,38 @@
 	padding: 50rpx 0;
 }
 
+.g-triplex-right,
+.g-triplex-left {
+	display: flex;
+	flex-direction: column;
+}
+.g-triplex-left {
+	width: 70%;
+}
+.g-triplex-left .g-title{
+	padding:8upx 0;
+}
+.g-triplex-left .g-text, .g-triplex-left .g-text-small {
+	color:#999999;
+}
+.g-triplex-right {
+	width: 30%;
+	text-align: right;
+	flex-direction: row-reverse;
+	button {
+		margin: 0 3px;
+	}
+}
+
+.g-list-cell {
+	padding: 20rpx 24rpx;
+}
+
+.g-popup-content {
+	height: 800rpx;
+	background-color: #fff;
+}
+
 
 
 
@@ -51,4 +93,57 @@
 
 .uni-list-cell-db {
 	overflow-x: hidden;
+}
+
+
+
+.g-cell {
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	.label {
+		padding: 0 16rpx;
+		flex-basis: 160rpx;
+		text-align: right;
+		box-sizing: border-box;
+	}
+	.value {
+		padding: 0 16rpx;
+		color: #999;
+		box-sizing: border-box;
+	}
+}
+
+
+button[size=mini] {
+	margin: 0 6rpx;
+}
+navigator {
+	button[size=mini] {
+		margin-bottom: -16rpx;
+	}
+}
+
+.g-po-re {
+	position: relative;
+}
+
+.g-fixed-right {
+	position: absolute;
+	z-index: 3;
+	right: 30rpx;
+	top: 16rpx;
+}
+
+.g-serial-num {
+	display: inline-block;
+	margin-right: 18rpx;
+	width: 38rpx;
+	height: 38rpx;
+	font-size: 28rpx;
+	text-align: center;
+	line-height: 35rpx;
+	border: 1px solid #09BB07;
+	border-radius: 50%;
+	color: #09BB07;
 }

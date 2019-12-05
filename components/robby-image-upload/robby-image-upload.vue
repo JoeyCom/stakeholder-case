@@ -153,7 +153,14 @@
 													});
 												}
 												console.log('success to upload image: ' + res.data)
-												resolve(res.data)
+
+												res.data = JSON.parse(res.data)
+												if (res.data.code === 0) {
+													resolve(res.data.data.filepath)
+												} else {
+													_self.$JFn.showError(res.data.msg)
+												}
+												// resolve(res.data)
 											}else{
 												console.log('fail to upload image:'+res.data)
 												reject('fail to upload image:' + remoteUrlIndex)
@@ -222,6 +229,7 @@
 			},
 			previewImage: function(e){
 				var imageIndex = e.currentTarget.dataset.index
+				console.log(this.imageList)
 				uni.previewImage({
 					current: this.imageList[imageIndex],
 					indicator: "number",
@@ -319,6 +327,11 @@
 				this.showMoveImage = false
 				
 				this.$emit('input', this.imageList)
+			}
+		},
+		watch: {
+			value (newVal) {
+				this.imageList = newVal
 			}
 		}
 	}

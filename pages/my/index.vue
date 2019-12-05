@@ -2,18 +2,18 @@
 	<view>
 		<image src="../../static/img/my-head.png" mode="widthFix" style="width: 100%;"></image>
 		<uni-list>
-		    <navigator url="/pages/my/law-case/index">
-					<uni-list-item title="我的案列" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'compose'}"></uni-list-item>
-				</navigator>
-		    <navigator url="/pages/my/law-case/index">
-					<uni-list-item title="权益确认" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'star'}"></uni-list-item>
-				</navigator>
-		    <navigator url="/pages/my/person-info/index">
-					<uni-list-item title="个人信息" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'person'}"></uni-list-item>
-				</navigator>
-		    <navigator url="/pages/my/web-account/index">
-					<uni-list-item title="web账号" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'contact'}"></uni-list-item>
-				</navigator>
+			<navigator url="/pages/my/person-info/index">
+				<uni-list-item title="个人资料" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'person'}"></uni-list-item>
+			</navigator>
+			<navigator url="/pages/my/law-case/index">
+				<uni-list-item title="我的案件" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'compose'}"></uni-list-item>
+			</navigator>
+			<navigator url="/pages/my/benefit/index">
+				<uni-list-item title="我要确权" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'star'}"></uni-list-item>
+			</navigator>
+			<navigator url="/pages/my/web-account/index">
+				<uni-list-item title="web账号" show-extra-icon :extra-icon="{color: '#777',size: '18',type: 'contact'}"></uni-list-item>
+			</navigator>
 		</uni-list>
 		 <!-- <view class="uni-list">
 				<view class="uni-list-cell uni-list-cell-pd">

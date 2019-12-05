@@ -13,8 +13,13 @@ export default {
 	},
 	showModal (obj) {
 		uni.showModal({
-			confirmColor: '007aff',
+			title: '提示',
+			// confirmColor: '007aff',
 			...obj
 		})
+	},
+	// null 转 ''
+	nullToEmpty (str) {
+		return str ? str : ''
 	}
 }

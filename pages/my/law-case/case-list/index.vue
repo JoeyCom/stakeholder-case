@@ -3,7 +3,7 @@
 		<view>
 			<navigator class="img-text-list" v-for="(v, i) in list" :key="i" :url="'/pages/my/law-case/detail?id=' + v.caseId">
 				<view class="img-box">
-					<image src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574162148259&di=7369452b407f693b727fed56f8849244&imgtype=0&src=http%3A%2F%2Fp0.ssl.cdn.btime.com%2Ft0198548d6dc1e038f7.jpg%3Fsize%3D500x333" />
+					<image src="http://120.79.13.215:8090/file/logo.jpg" />
 				</view>
 				<view class="text-box">
 					<view class="title">{{ v.caseName }}</view>
