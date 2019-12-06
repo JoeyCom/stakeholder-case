@@ -51,6 +51,10 @@
 		},
 		methods: {
 			show () {
+				// 禁用状态
+				if (this.disabled) {
+					return
+				}
 				this.$refs.tkitree._show()
 			},
 			confirm (res) {
@@ -69,7 +73,6 @@
 						arr[i].checked = false
 					}
 				})
-				console.log(arr)
 				this.$emit('update:range', arr)
 			}
 		},

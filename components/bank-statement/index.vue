@@ -200,13 +200,13 @@
 				modalBankStatementEdit: {
 					show: false,
 					data: {
+						id: '',
 						caseId: this.caseId,
 						serialNo: '',
 						bankName: '',
 						bankNo: '',
 						transTime: '',
-						transMoney: '',
-						attachment: ''
+						transMoney: ''
 					},
 					attachment: []
 				}
@@ -264,7 +264,10 @@
 			// 修改流水详情-点击按钮事件
 			bankStatementEditBtn (row) {
 				this.modalBankStatementEdit.show = true
-				this.modalBankStatementEdit.data = row
+				let data = this.modalBankStatementEdit.data
+				for (let k in data) {
+					data[k] = row[k]
+				}
 				this.modalBankStatementEdit.attachment = [row.filePath]
 			},
 			bankStatementEdit () {

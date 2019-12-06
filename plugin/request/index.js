@@ -176,6 +176,16 @@ function install(Vue, router) {
 		console.log(err)
 	}
 	
+	// FormData 方式请求
+	function requestFormData (params) {
+		params.method = 'POST'
+		delete params.data.jFile
+		let sign = 'XXXXX'
+		params.header['Content-Type'] = 'multipart/form-data; boundary=' + sign
+		params.data = createFormData(params.data, sign)
+		return uni.request(params)
+	}
+	
 	// 拼接formData数据
 	function createFormData (obj, sign = 'XXX') {
 		let str = ''
@@ -198,14 +208,6 @@ function install(Vue, router) {
 	 *   }
 	 * */
 	function request (data) {
-		// 当data是对象并且data.method是文件时，上传文件
-		if (isObj(data) && data.method === 'FILE') {
-			uploadFile({
-				...data,
-				url: requestUrl[data.url]
-			})
-			return
-		}
 		// 初始化参数
 		let url
 		let body
@@ -269,7 +271,7 @@ function install(Vue, router) {
 						return requestSuccess(successFn, failFn, res)
 					},
 					fail (err) {
-						requestFail(err)
+						return requestFormData(params)
 					}
 				}
 				delete body.jFile
@@ -277,23 +279,15 @@ function install(Vue, router) {
 				return uni.uploadFile(obj)
 			} else {
 				// 没穿文件，调用普通post
-				params.method = 'POST'
-				delete params.data.jFile
-				let sign = 'XXXXX'
-				params.header['Content-Type'] = 'multipart/form-data; boundary=' + sign
-				params.data = createFormData(params.data, sign)
-				return uni.request(params)
+				// params.method = 'POST'
+				// delete params.data.jFile
+				// let sign = 'XXXXX'
+				// params.header['Content-Type'] = 'multipart/form-data; boundary=' + sign
+				// params.data = createFormData(params.data, sign)
+				// return uni.request(params)
+				return requestFormData(params)
 			}
 		}
-	}
-	
-	// 上传文件
-	function uploadFile (obj) {
-		obj = {
-			header: { token: uni.getStorageSync('token'), ...obj.header },
-			...obj
-		}
-		uni.uploadFile(obj)
 	}
 
 	// Vue.prototype.$JRequest = {

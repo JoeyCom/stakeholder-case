@@ -53,7 +53,6 @@
 		methods: {
 			getDetail (id) {
 				this.$JRequest('caseDetail', '/' + id, data => {
-					console.log(data)
 					this.detail = data
 				})
 			},

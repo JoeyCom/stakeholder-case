@@ -10,7 +10,7 @@
 				<view class="uni-label">产品名称</view>
 				<view class="uni-list-cell-db g-p-normal">
 					<!-- <input v-model="formData.productName" class="uni-input" type="text" :disabled="!isEdit" placeholder="请输入产品名称" /> -->
-					<j-picker-check v-model="formDataExtra.productName" :range.sync="productRange" range-key="name" placeholder="请选择产品" multiple />
+					<j-picker-check v-model="formDataExtra.productName" :range.sync="productRange" range-key="name" placeholder="请选择产品" multiple :disabled="!isEdit" />
 				</view>
 			</view>
 			<view class="uni-list-cell">

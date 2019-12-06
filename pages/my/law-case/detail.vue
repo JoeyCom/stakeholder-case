@@ -10,7 +10,7 @@
 				<view class="uni-label">产品名称</view>
 				<view class="uni-list-cell-db g-p-normal">
 					<!-- <input v-model="formData.productName" class="uni-input" type="text" :disabled="!isEdit" /> -->
-					<j-picker-check v-model="formDataExtra.productName" :range.sync="productRange" range-key="name" placeholder="请选择产品" multiple />
+					<j-picker-check v-model="formDataExtra.productName" :range.sync="productRange" range-key="name" multiple :disabled="!isEdit" />
 				</view>
 			</view>
 			<view class="uni-list-cell">
@@ -38,7 +38,7 @@
 				<view class="uni-label">购买地</view>
 				<view class="uni-list-cell-db g-p-normal">
 					<!-- <input v-model="formData.investAddress" class="uni-input" type="text" :disabled="!isEdit" /> -->
-					<j-picker-region v-model="formDataExtra.investAddress" placeholder="请选择购买地" :disabled="!isEdit" />
+					<j-picker-region v-model="formDataExtra.investAddress" :disabled="!isEdit" />
 				</view>
 			</view>
 			<view class="uni-list-cell">
@@ -89,7 +89,6 @@
 	import BankStatement from '@/components/bank-statement/index'
 	export default {
 		onLoad (q) {
-			console.log(q)
 			this.id = this.formData.caseId = parseInt(q.id)
 			this.productRange = q.productName.split(this.productSeparator).map((v, i) => ({
 				id: i,
@@ -134,20 +133,19 @@
 			getDetail () {
 				this.$JRequest('poofCaseDetail', '/' + this.id, data => {
 					this.formData = data
-					this.attachment = [data.contractPath[0].filePath]
-					this.formDataExtra.productName = this.formData.productName.split(this.productSeparator).map((v, i) => ({
-						id: i,
-						name: v
-					}))
+					this.attachment = data.contractPath[0] ? [data.contractPath[0].filePath] : []
+					this.formDataExtra.productName = this.formData.productName.split(this.productSeparator).map(val => this.productRange.find((v, i) => v.name === val))
 					this.formDataExtra.investAddress = this.formData.investAddress.split(' ')
 				})
 			},
 			enter () {
+				this.formData.productName = this.formDataExtra.productName.map(v => v.name).join(this.productSeparator)
+				this.formData.investAddress = this.formDataExtra.investAddress.join(' ')
 				this.$JRequest('caseChannel', {
 					...this.formData,
 					jFile: {
 						name: 'attachment',
-						filePath: this.attachment[0] !== this.formData.contractPath[0].filePath ? this.attachment[0] : '' //判断是否改变了文件
+						filePath: this.formData.contractPath[0] ? (this.attachment[0] !== this.formData.contractPath[0].filePath ? this.attachment[0] : '') : '' //判断是否改变了文件
 					}
 				}, () => {
 					this.$JFn.showSuccess('修改举证成功')

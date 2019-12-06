@@ -15,7 +15,7 @@
 		
 		<view class="grid">
 			<uni-grid :column="4">
-				<uni-grid-item @click.native="userInfo.auth === 0 && uni.navigateTo({ url: '/pages/my/certification/index?userId=' + userInfo.userId })">
+				<uni-grid-item @click.native="certificateBtn">
 					<uni-icons type="contact" size="30"></uni-icons>
 					<text class="text">实名认证</text>
 					<text class="certification-status" :class="{ danger: userInfo.auth === 0 }">{{ userInfo.auth === 0 ? '未认证' : '已认证' }}</text>
@@ -43,7 +43,7 @@
 			<!-- <view v-else class="g-nodata">暂无案列</view> -->
 		</view>
 		
-		<view>
+		<!-- <view>
 			<uni-popup ref="popup" type="top">
 				<scroll-view class="g-popup-content" scroll-y>
 					<uni-card
@@ -81,7 +81,7 @@
 					</uni-card>
 				</scroll-view>
 			</uni-popup>
-		</view>
+		</view> -->
 		
 	</view>
 </template>
@@ -158,12 +158,12 @@
 				}, () => {})
 			},
 			// 忽略提示
-			ignoreNotice (id) {
-				this.$JRequest('ignoreNotice', '/' + id, data => {
-					this.$JFn.showSuccess('操作成功')
-					this.getVerifyNotice()
-				})
-			},
+			// ignoreNotice (id) {
+			// 	this.$JRequest('ignoreNotice', '/' + id, data => {
+			// 		this.$JFn.showSuccess('操作成功')
+			// 		this.getVerifyNotice()
+			// 	})
+			// },
 			// 获取用户信息
 			getUserInfo () {
 				if (uni.getStorageSync('userInfo')) {
@@ -174,6 +174,14 @@
 					this.userInfo = data
 					uni.setStorageSync('userInfo', JSON.stringify(data))
 				})
+			},
+			// 点击实名认证按钮
+			certificateBtn () {
+				if (this.userInfo.auth === 0) {
+					uni.navigateTo({ url: '/pages/my/certification/index?userId=' + userInfo.userId })
+				} else {
+					uni.navigateTo({ url: '/pages/my/person-info/index' })
+				}
 			}
 		}
 	}
