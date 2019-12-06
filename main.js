@@ -20,6 +20,7 @@ import JPickerRegion from '@/components/j-picker-region'
 // 省市县详细地址
 import JPickerAddress from '@/components/j-picker-address'
 // 单选多选选择器
+// 111
 import JPickerCheck from '@/components/j-picker-check'
 
 Vue.config.productionTip = false
